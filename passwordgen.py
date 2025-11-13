@@ -22,13 +22,24 @@ def build_character_pool(chars_to_avoid):
 
 def generate_password(length, word_to_include, pool):
     remaining_length = length - len(word_to_include)
-    random_chars = [random.choice(pool) for _ in range(remaining_length)]
-    password_list = list(word_to_include) + random_chars
-    random.shuffle(password_list)
+    
+    # Split remaining characters for left and right
+    left_length = remaining_length // 2
+    right_length = remaining_length - left_length
+
+    left_chars = [random.choice(pool) for _ in range(left_length)]
+    right_chars = [random.choice(pool) for _ in range(right_length)]
+
+    # Assemble the password
+    password_list = left_chars + list(word_to_include) + right_chars
     password = ''.join(password_list)
     print("Generated password:", password)
+
+
 
 
 length, chars_to_avoid, word_to_include = get_user_input()
 pool = build_character_pool(chars_to_avoid)
 generate_password(length, word_to_include, pool)
+
+
